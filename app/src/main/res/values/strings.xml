@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">MoviesApplication</string>
+
+
+    <string name="email">Email</string>
+    <string name="dang_nhap">Đăng nhập</string>
+    <string name="passwork">Mật khẩu</string>
+    <string name="forget_passwod">Quên mật khẩu</string>
+    <string name="facebook">Đăng nhập với Facebook</string>
+    <string name="dang_ky">Đăng ký</string>
+    <string name="name">Họ tên</string>
+    <string name="validate">Xác nhận mật khẩu</string>
+    <string name="send">Gửi mật khẩu</string>
+    <string name="text_email">"Hãy nhập email bạn đã dùng để tạo tài khoản"</string>
+    <string name="note">Bạn chưa có tài khoản?</string>
+
+    <string name="your_string_here"> <u>Đăng ký</u>.</string>
+
+</resources>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:weightSum="4">
+
+    <ImageView
+        android:layout_width="170dp"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg"
+        android:id="@+id/image"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:orientation="vertical"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="#F80837"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txt_titlevn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/txt_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Luot xem: "
+            android:textColor="#F80837" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_content"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/img_like"
+                android:src="@drawable/ic_like" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_like"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:text="Thich"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_xemthem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/orange"
+                android:text="Xem phim" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
