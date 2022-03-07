@@ -12,11 +12,20 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface MovieService {
+    //    @GET("movie/list?page=1&per_page=10")
+//    Call<Data> getAnswer();
+
+
+
+
+
     @Headers("app_token: dCuW7UQMbdvpcBDfzolAOSGFIcAec11a")
-    @GET("movie/list?page=1&per_page=10")
-    Call<Data> getAnswer();
+    @GET("movie/list")
+    Call<Data> getAnswer(@Query("page") String page,
+                            @Query("per_page") String per_page);
 
     ///
     @FormUrlEncoded

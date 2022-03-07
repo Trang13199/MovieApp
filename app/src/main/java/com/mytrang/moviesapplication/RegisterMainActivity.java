@@ -72,11 +72,11 @@ public class RegisterMainActivity extends AppCompatActivity {
                 }if(repass.isEmpty()){
                     txtRepass.setError("Request Password is required!");
                     txtRepass.requestFocus();
+                }if(!repass.equals(password)){
+                    txtRepass.setError("No same!");
+                    txtRepass.requestFocus();
+
                 }
-//                if(repass!= password){
-//                    txtRepass.setError("Nooooo");
-//                    txtRepass.requestFocus();
-//                }
 
                 Call<UserModel> call = UserClient
                         .getInstance()
@@ -93,9 +93,6 @@ public class RegisterMainActivity extends AppCompatActivity {
 
                             Intent intent = new Intent(RegisterMainActivity.this, LoginMainActivity.class);
                             startActivity(intent);
-//
-//                            Log.e("abc", model.getMessage());
-//                            Log.e("bnm", model.getData().toString());
                         }
                     }
 

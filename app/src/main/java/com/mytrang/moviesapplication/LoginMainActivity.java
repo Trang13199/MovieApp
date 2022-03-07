@@ -20,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginMainActivity extends AppCompatActivity {
+public class LoginMainActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText txtemal, txtpassword;
     private TextView txtRegister;
     private String email, password;
@@ -38,10 +38,6 @@ public class LoginMainActivity extends AppCompatActivity {
         anhXa();
 
         preferences = getSharedPreferences("data", MODE_PRIVATE);
-//        txtemal.setText(preferences.getString("email",""));
-//        txtpassword.setText(preferences.getString("password", ""));
-
-
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,13 +91,8 @@ public class LoginMainActivity extends AppCompatActivity {
         });
 
 
-        faceBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginMainActivity.this, RegisterMainActivity.class);
-                startActivity(intent);
-            }
-        });
+        faceBook.setOnClickListener(this);
+        txtRegister.setOnClickListener(this);
 
 
     }
@@ -109,11 +100,33 @@ public class LoginMainActivity extends AppCompatActivity {
     private void anhXa() {
         txtemal = (EditText) findViewById(R.id.txt_email);
         txtpassword = (EditText) findViewById(R.id.txt_password);
-        txtRegister = (TextView) findViewById(R.id.register);
+        txtRegister = (TextView) findViewById(R.id.txt_dangky);
 
         login = (Button) findViewById(R.id.btn_login);
         forgetPassword = (Button) findViewById(R.id.btn_forgot_pass);
         faceBook = (Button) findViewById(R.id.btn_fb);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_fb:
+                loginFacebook();
+                break;
+            case R.id.txt_dangky:
+                sendRegister();
+
+        }
+    }
+
+    private void sendRegister() {
+        Intent i = new Intent(LoginMainActivity.this, RegisterMainActivity.class);
+        startActivity(i);
+    }
+
+    private void loginFacebook() {
+        Intent intent = new Intent(LoginMainActivity.this, ListActivity.class);
+        startActivity(intent);
     }
 }

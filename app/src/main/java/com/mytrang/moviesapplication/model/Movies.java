@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Movies implements Serializable {
     @SerializedName("id")
     @Expose
-    private long id;
+    private Integer id;
     @SerializedName("title")
     @Expose
     private String title;
@@ -52,11 +52,11 @@ public class Movies implements Serializable {
     @Expose
     private String type;
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

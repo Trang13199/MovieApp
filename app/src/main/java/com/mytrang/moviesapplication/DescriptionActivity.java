@@ -2,10 +2,12 @@ package com.mytrang.moviesapplication;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.shadow.ShadowRenderer;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -25,13 +28,14 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
     ImageView imageView, imagelike;
     TextView title, luotxem, category, actor, director, manufacture,
             thoiluong, description, toolbar_title, next, like;
-    String nameYoutube;
-//    Toolbar toolbar;
+    String nameYoutube, id;
 
 
     String API_KEY ="AIzaSyDhvRkLLyQZYKG4SnnzbsBF06WGKHma_gw";
     int REQUEST_VIDEO = 123;
     YouTubePlayerView youTubePlayerView;
+
+    SharedPreferences preferences;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -41,6 +45,7 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
 
         anhXa();
 
+
         Bundle bundle = getIntent().getExtras();
         if(bundle==null){
             return;
@@ -48,6 +53,8 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
         Movies movies = (Movies) bundle.get("abc");
         String image = movies.getImage();
         Picasso.get().load(image).into(imageView);
+
+        id = movies.getId().toString();
 
         String name = movies.getTitle();
 
@@ -68,7 +75,7 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
             nameYoutube = youtube[i];
         }
 
-//        luotxem.setText(movies.getViews());
+        luotxem.setText("Lượt xem: "+movies.getViews());
         category.setText("Genres: "+movies.getCategory());
         actor.setText("Actor: "+movies.getActor());
         director.setText("Director: "+movies.getDirector());
@@ -78,8 +85,8 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
 
         next.setText("Xem thêm");
         String des = movies.getDescription();
-        if(des.length()>200){
-            description.setText(des.substring(0,200)+"...");
+        if(des.length()>180){
+            description.setText(des.substring(0,180)+"...");
         }else{
         next.setText(null);
         description.setText(des);}
@@ -96,16 +103,59 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
         }
     });
 
+
+
+
+
     imagelike.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            preferences = getSharedPreferences("data", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+        boolean check = preferences.getBoolean(id, false);
+
+            if (check) {
+                checkRed();
+                editor.putBoolean(id, false);
+            } else {
+                checkWhite();
+                editor.putBoolean(id,true);
+            }
+            editor.commit();
+        }
+
+    });
+
+
+    getInfo();
+    }
+
+    private void getInfo(){
+        preferences = getSharedPreferences("data", MODE_PRIVATE);
+        boolean ok = preferences.getBoolean(id, false);
+        if(ok){
+            imagelike.setImageResource(R.drawable.ic_like);
+            like.setText("Thích");
+            like.setTextColor(Color.parseColor("#FFFFFFFF"));
+
+        }else{
+            imagelike.setImageResource(R.drawable.ic_like_orange);
             like.setText("Đã thích");
             like.setTextColor(Color.parseColor("#F43D04"));
 
-            imagelike.setImageResource(R.drawable.ic_like_orange);
         }
-    });
+    }
 
+    private void checkRed() {
+        imagelike.setImageResource(R.drawable.ic_like_orange);
+        like.setText("Đã thích");
+        like.setTextColor(Color.parseColor("#F43D04"));
+    }
+
+    private void checkWhite() {
+        imagelike.setImageResource(R.drawable.ic_like);
+        like.setText("Thích");
+        like.setTextColor(Color.parseColor("#FFFFFFFF"));
     }
 
     private void anhXa() {
@@ -121,7 +171,8 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
         description = findViewById(R.id.txt_description);
 
         imagelike = findViewById(R.id.image_like);
-        like = findViewById(R.id.like);
+        like = findViewById(R.id.txtlike);
+
 
         next = findViewById(R.id.next);
         youTubePlayerView = findViewById(R.id.youtube);

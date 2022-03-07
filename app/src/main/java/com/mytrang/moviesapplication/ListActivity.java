@@ -45,24 +45,24 @@ public class ListActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setTitle("HFILM");
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#F43D04")));
-//        actionBar.
+
 
         progressDialog = new ProgressDialog(ListActivity.this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
         progressDialog.setCancelable(false);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                progressDialog.dismiss();
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(5000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                progressDialog.dismiss();
+//            }
+//        }).start();
 
 
         movieService = APIUtil.getMovieService();
@@ -81,26 +81,30 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(itemDecoration);
 
         loadAnswer();
+        progressDialog.dismiss();
 
     }
 
     private void loadAnswer() {
-        movieService.getAnswer().enqueue(new Callback<Data>() {
+        movieService.getAnswer("1", "10").enqueue(new Callback<Data>() {
 
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
                 if (response.isSuccessful()) {
                     adapter.updateAnswer(response.body().getData());
-                    arrayList = new Data().getData();
+//                    arrayList = new Data().getData();
                     recyclerView.setAdapter(adapter);
-
                 }
             }
 
             @Override
             public void onFailure(Call<Data> call, Throwable t) {
-                Log.d("MainActivity", "error loading from API");
+                Log.d("MainActivity", "Error loading from API");
             }
         });
     }
+
+
+
+
 }

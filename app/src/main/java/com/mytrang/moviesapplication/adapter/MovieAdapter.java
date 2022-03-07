@@ -28,6 +28,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
    private Context context;
    private List<Movies> arrayList = new ArrayList<>();
    private MovieItemListener mItemListener;
+   private String id;
 
    SharedPreferences preferences;
 
@@ -76,6 +77,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 .load(movies.getImage())
 //                .placeholder(R.drawable.ic_bg)
                 .into(holder.imageView);
+
+        holder.views.setText("Lượt xem: "+movies.getViews().toString());
+        id = movies.getId().toString();
+
+        preferences = context.getSharedPreferences("data", context.MODE_PRIVATE);
+        boolean ok = preferences.getBoolean(id, false);
+        if(ok){
+            holder.imgLike.setImageResource(R.drawable.ic_like);
+            holder.txtLike.setText("Thích");
+            holder.txtLike.setTextColor(Color.parseColor("#FFFFFFFF"));
+
+        }else{
+            holder.imgLike.setImageResource(R.drawable.ic_like_orange);
+            holder.txtLike.setText("Đã thích");
+            holder.txtLike.setTextColor(Color.parseColor("#F43D04"));
+
+        }
     }
 
     public void updateAnswer(List<Movies> list){
@@ -103,7 +121,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             imageView = itemView.findViewById(R.id.image);
             title = itemView.findViewById(R.id.txt_title);
             name = itemView.findViewById(R.id.txt_titlevn);
-            views = itemView.findViewById(R.id.txt_view);
+            views = itemView.findViewById(R.id.views);
             content = itemView.findViewById(R.id.txt_content);
 
             imgLike = itemView.findViewById(R.id.img_like);
@@ -115,8 +133,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             this.mmovieItemListener = movieItemListener;
             watch = itemView.findViewById(R.id.btn_xemthem);
             watch.setOnClickListener(this);
-
-//            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -149,10 +165,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         }
 
         private void setImage() {
-            txtLike.setText("Đã thích");
-            txtLike.setTextColor(Color.parseColor("#F43D04"));
+            preferences = context.getSharedPreferences("data", context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            boolean check = preferences.getBoolean(id, true);
 
-            imgLike.setImageResource(R.drawable.ic_like_orange);
+            if (check) {
+                txtLike.setText("Đã thích");
+                txtLike.setTextColor(Color.parseColor("#F43D04"));
+                imgLike.setImageResource(R.drawable.ic_like_orange);
+                editor.putBoolean(id, false);
+            } else {
+                imgLike.setImageResource(R.drawable.ic_like);
+                txtLike.setText("Thích");
+                txtLike.setTextColor(Color.parseColor("#FFFFFFFF"));
+                editor.putBoolean(id,true);
+            }
+            editor.commit();
         }
     }
 
