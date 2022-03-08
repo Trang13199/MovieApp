@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
    private MovieItemListener mItemListener;
    private String id;
 
+   private static final int TYPE_ITEM = 1;
+   private static final int TYPE_LOADING = 2;
+   private boolean isLoading;
+
+
    SharedPreferences preferences;
 
     public MovieAdapter(Context context, List<Movies> arrayList, MovieItemListener movieItemListener) {
@@ -37,6 +43,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         this.arrayList = arrayList;
         mItemListener = mItemListener;
     }
+
+//    @Override
+//    public int getItemViewType(int position) {
+////        if(arrayList != null && position == arrayList.size() - 1 && isLoading){
+////            return TYPE_LOADING;
+////        }
+////        return TYPE_ITEM;
+//
+//        return arrayList.get(position) == null ? TYPE_ITEM : TYPE_LOADING;
+//    }
 
     @NonNull
     @Override
@@ -84,20 +100,32 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         preferences = context.getSharedPreferences("data", context.MODE_PRIVATE);
         boolean ok = preferences.getBoolean(id, false);
         if(ok){
+
+            holder.imgLike.setImageResource(R.drawable.ic_like_orange);
+            holder.txtLike.setText("Đã thích");
+            holder.txtLike.setTextColor(Color.parseColor("#F43D04"));
+
+        }else{
+
             holder.imgLike.setImageResource(R.drawable.ic_like);
             holder.txtLike.setText("Thích");
             holder.txtLike.setTextColor(Color.parseColor("#FFFFFFFF"));
 
-        }else{
-            holder.imgLike.setImageResource(R.drawable.ic_like_orange);
-            holder.txtLike.setText("Đã thích");
-            holder.txtLike.setTextColor(Color.parseColor("#F43D04"));
 
         }
     }
 
     public void updateAnswer(List<Movies> list){
         arrayList = list;
+        notifyDataSetChanged();
+    }
+
+
+    public void insertArr(List<Movies> list){
+        for(Movies m : list){
+            arrayList.add(m);
+        }
+        notifyItemInserted(arrayList.size() - 1);
         notifyDataSetChanged();
     }
     public Movies getMovie(int adapterPosition){
@@ -167,18 +195,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         private void setImage() {
             preferences = context.getSharedPreferences("data", context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
-            boolean check = preferences.getBoolean(id, true);
+            boolean check = preferences.getBoolean(id, false);
 
             if (check) {
                 txtLike.setText("Đã thích");
                 txtLike.setTextColor(Color.parseColor("#F43D04"));
                 imgLike.setImageResource(R.drawable.ic_like_orange);
-                editor.putBoolean(id, false);
+                editor.putBoolean(id, true);
             } else {
                 imgLike.setImageResource(R.drawable.ic_like);
                 txtLike.setText("Thích");
                 txtLike.setTextColor(Color.parseColor("#FFFFFFFF"));
-                editor.putBoolean(id,true);
+                editor.putBoolean(id,false);
             }
             editor.commit();
         }

@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.material.shadow.ShadowRenderer;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -27,7 +25,7 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
 
     ImageView imageView, imagelike;
     TextView title, luotxem, category, actor, director, manufacture,
-            thoiluong, description, toolbar_title, next, like;
+            thoiluong, description, toolbar_title, next, like, back;
     String nameYoutube, id;
 
 
@@ -105,8 +103,6 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
 
 
 
-
-
     imagelike.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -114,12 +110,12 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
             SharedPreferences.Editor editor = preferences.edit();
         boolean check = preferences.getBoolean(id, false);
 
-            if (check) {
+            if (!check) {
                 checkRed();
-                editor.putBoolean(id, false);
+                editor.putBoolean(id, true);
             } else {
                 checkWhite();
-                editor.putBoolean(id,true);
+                editor.putBoolean(id,false);
             }
             editor.commit();
         }
@@ -128,20 +124,30 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
 
 
     getInfo();
+
+
+    back.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(DescriptionActivity.this, ListActivity.class);
+            startActivity(intent);
+        }
+    });
     }
 
     private void getInfo(){
         preferences = getSharedPreferences("data", MODE_PRIVATE);
         boolean ok = preferences.getBoolean(id, false);
         if(ok){
-            imagelike.setImageResource(R.drawable.ic_like);
-            like.setText("Thích");
-            like.setTextColor(Color.parseColor("#FFFFFFFF"));
 
-        }else{
             imagelike.setImageResource(R.drawable.ic_like_orange);
             like.setText("Đã thích");
             like.setTextColor(Color.parseColor("#F43D04"));
+        }else{
+
+            imagelike.setImageResource(R.drawable.ic_like);
+            like.setText("Thích");
+            like.setTextColor(Color.parseColor("#FFFFFFFF"));
 
         }
     }
@@ -172,6 +178,8 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
 
         imagelike = findViewById(R.id.image_like);
         like = findViewById(R.id.txtlike);
+
+        back = findViewById(R.id.back);
 
 
         next = findViewById(R.id.next);
