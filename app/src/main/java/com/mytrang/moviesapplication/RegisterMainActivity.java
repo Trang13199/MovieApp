@@ -6,6 +6,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -24,8 +25,10 @@ public class RegisterMainActivity extends AppCompatActivity {
     private MovieService movieService;
     EditText txtName, txtEmail, txtPassword, txtRepass;
     Button register;
+    ImageView close;
 
     String name, email, password, repass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,34 +50,34 @@ public class RegisterMainActivity extends AppCompatActivity {
                 password = txtPassword.getText().toString().trim();
                 repass = txtRepass.getText().toString().trim();
 
-                if(name.isEmpty()){
+                if (name.isEmpty()) {
                     txtName.setError("Name is required");
                     txtName.requestFocus();
                 }
-                if(email.isEmpty()){
+                if (email.isEmpty()) {
                     txtEmail.setError("Email is required!");
                     txtEmail.requestFocus();
                 }
-                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     txtEmail.setError("Enter a valid email!");
                     txtEmail.requestFocus();
                 }
-                if (password.isEmpty()){
+                if (password.isEmpty()) {
                     txtPassword.setError("Password is required!");
                     txtPassword.requestFocus();
                 }
-                if(password.length()<6){
+                if (password.length() < 6) {
                     txtPassword.setError("Password should be atleast 6 character long");
                     txtPassword.requestFocus();
-                }if(repass.isEmpty()){
+                }
+                if (repass.isEmpty()) {
                     txtRepass.setError("Request Password is required!");
                     txtRepass.requestFocus();
-                }if(!repass.equals(password)){
+                }
+                if (!repass.equals(password)) {
                     txtRepass.setError("No same!");
                     txtRepass.requestFocus();
-
                 }
-
                 Call<UserModel> call = UserClient
                         .getInstance()
                         .getApi()
@@ -86,7 +89,7 @@ public class RegisterMainActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
 
                             User model = response.body().getData();
-                            Toast.makeText(RegisterMainActivity.this, "Email: "+ model.getEmail().toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterMainActivity.this, "Email: " + model.getEmail().toString(), Toast.LENGTH_LONG).show();
 
                             Intent intent = new Intent(RegisterMainActivity.this, LoginMainActivity.class);
                             startActivity(intent);
@@ -104,6 +107,14 @@ public class RegisterMainActivity extends AppCompatActivity {
             }
         });
 
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     private void anhXa() {
@@ -113,5 +124,6 @@ public class RegisterMainActivity extends AppCompatActivity {
         txtRepass = findViewById(R.id.txt_password);
 
         register = findViewById(R.id.register);
+        close = findViewById(R.id.closeRe);
     }
 }

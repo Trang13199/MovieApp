@@ -16,22 +16,18 @@ public interface MovieService {
 //    Call<Data> getAnswer();
 
 
-
-
-
     @Headers("app_token: dCuW7UQMbdvpcBDfzolAOSGFIcAec11a")
     @GET("movie/list")
     Call<Data> getAnswer(@Query("page") String page,
-                            @Query("per_page") String per_page);
+                         @Query("per_page") String per_page);
 
     ///
     @FormUrlEncoded
     @Headers("app_token: dCuW7UQMbdvpcBDfzolAOSGFIcAec11a")
     @POST("user/registry")
     Call<UserModel> getRegister(@Field("full_name") String full_name,
-                           @Field("email") String email,
-                           @Field("password") String password );
-
+                                @Field("email") String email,
+                                @Field("password") String password);
 
 
     //////////////

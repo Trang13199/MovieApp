@@ -22,23 +22,24 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     /// checking if the input in form is valid
-    boolean validateInput(){
-        if(email.isEmpty()){
+    boolean validateInput() {
+        if (email.isEmpty()) {
             etEmail.setError("Please enter Email!");
             etEmail.requestFocus();
             return false;
         }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Please enter Valid Email!");
             return false;
         }
         return true;
     }
+
     public void performForgetPassword(View view) {
-        if(validateInput()){
+        if (validateInput()) {
             // input valid, here send data to your server
 
-            Intent intent  = new Intent(this, LoginMainActivity.class);
+            Intent intent = new Intent(this, LoginMainActivity.class);
             startActivity(intent);
         }
     }

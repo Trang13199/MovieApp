@@ -15,7 +15,7 @@ public class User {
     private String password;
     @SerializedName("full_name")
     @Expose
-    private String  fullName;
+    private String fullName;
     @SerializedName("gender")
     @Expose
     private String gender;

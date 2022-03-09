@@ -15,8 +15,11 @@
     <string name="note">Bạn chưa có tài khoản?</string>
 
     <string name="your_string_here"> <u>Đăng ký</u>.</string>
+    <string name="dieukhoan"> <u>Điều khoản sử sụng</u>.</string>
+    <string name="Quydinh"><u>Quy định bảo mật</u>.</string>
 
 
+<string name="input">Bằng việc chọn nút Đăng ký, bạn đã đồng ý với <u>Điều khoản sử sụng</u> và <u>Quy định bảo mật</u> của HFilm </string>
 
     <string name="facebook_app_id">535181724487825</string> <string name="fb_login_protocol_scheme">fb535181724487825</string>
 

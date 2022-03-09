@@ -90,7 +90,7 @@ public class ListActivity extends AppCompatActivity {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
 
-         recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+        recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
             @Override
             public void loadMoreItems() {
                 isLoading = true;
@@ -121,13 +121,14 @@ public class ListActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                movieService.getAnswer(String.valueOf(currentPage),"10").enqueue(new Callback<Data>() {
+                movieService.getAnswer(String.valueOf(currentPage), "10").enqueue(new Callback<Data>() {
                     @Override
                     public void onResponse(Call<Data> call, Response<Data> response) {
                         if (response.isSuccessful()) {
                             adapter.insertArr(response.body().getData());
                         }
                     }
+
                     @Override
                     public void onFailure(Call<Data> call, Throwable t) {
                         Log.d("MainActivity", "Error loading from API");
@@ -135,7 +136,7 @@ public class ListActivity extends AppCompatActivity {
                 });
                 isLoading = false;
                 progressBar.setVisibility(View.GONE);
-                if(currentPage == totalPage) {
+                if (currentPage == totalPage) {
                     isLoading = true;
                 }
 

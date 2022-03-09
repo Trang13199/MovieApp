@@ -70,13 +70,13 @@ public class LoginMainActivity extends AppCompatActivity {
                 email = txtemal.getText().toString().trim();
                 password = txtpassword.getText().toString().trim();
 
-                if(TextUtils.isEmpty(email)|| TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                     txtemal.setError("Email is required!");
                     txtemal.requestFocus();
 
                     txtpassword.setError("Password is required!");
                     txtpassword.requestFocus();
-                }else{
+                } else {
                     getLogin();
                 }
             }
@@ -90,7 +90,7 @@ public class LoginMainActivity extends AppCompatActivity {
                 call.enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                        if(response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             response.body().getData();
 
                             User m = response.body().getData();
@@ -100,21 +100,21 @@ public class LoginMainActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = preferences.edit();
                             editor.putString("email", email);
                             editor.putString("password", password);
-                            editor.putString("token", response.body().getData().getAccessToken().toString());
+                            editor.putString("token", m.getAccessToken());
                             editor.commit();
-                            Toast.makeText(LoginMainActivity.this,"Login Successful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginMainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
 
                             Intent intent = new Intent(LoginMainActivity.this, ListActivity.class);
                             startActivity(intent);
-                        }else{
-                            Toast.makeText(LoginMainActivity.this,"Login failing", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(LoginMainActivity.this, "Login failing", Toast.LENGTH_LONG).show();
 
                         }
                     }
 
                     @Override
                     public void onFailure(Call<UserModel> call, Throwable t) {
-                        Toast.makeText(LoginMainActivity.this,"Throwable: "+t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginMainActivity.this, "Throwable: " + t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
                     }
                 });
@@ -139,10 +139,10 @@ public class LoginMainActivity extends AppCompatActivity {
         });
 
 //        printHashKey(LoginMainActivity.this);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
+//        FacebookSdk.sdkInitialize(getApplicationContext());
+//        AppEventsLogger.activateApp(this);
         callbackManager = CallbackManager.Factory.create();
-        facebook.setReadPermissions("email");
+//        facebook.setReadPermissions("email");
         facebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -150,9 +150,8 @@ public class LoginMainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("token", token);
                 editor.commit();
+                Toast.makeText(LoginMainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
 
-//                Intent intent = new Intent(LoginMainActivity.this, ListActivity.class);
-//                startActivity(intent);
             }
 
             @Override
@@ -166,11 +165,11 @@ public class LoginMainActivity extends AppCompatActivity {
             }
         });
 
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-
-
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+//        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+//        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+//
+//
+//        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
 
     }
 
@@ -209,7 +208,6 @@ public class LoginMainActivity extends AppCompatActivity {
         facebook = findViewById(R.id.login_button);
         close = findViewById(R.id.close);
     }
-
 
 
     //// phuong thuc lay hask key

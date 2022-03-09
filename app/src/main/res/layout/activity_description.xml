@@ -148,12 +148,17 @@
         android:layout_height="1dp"
         android:background="@color/white"/>
 
-
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="XEM TRAILER"
+    android:textColor="@color/orange"
+    android:textSize="20sp"
+    android:layout_margin="10dp"/>
     <com.google.android.youtube.player.YouTubePlayerView
         android:layout_width="match_parent"
         android:id="@+id/youtube"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_height="wrap_content">
 
     </com.google.android.youtube.player.YouTubePlayerView>
 </LinearLayout>
