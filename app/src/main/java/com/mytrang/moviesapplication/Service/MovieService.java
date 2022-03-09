@@ -1,12 +1,9 @@
 package com.mytrang.moviesapplication.Service;
 
 import com.mytrang.moviesapplication.model.Data;
-import com.mytrang.moviesapplication.model.LoginRequest;
-import com.mytrang.moviesapplication.model.User;
 import com.mytrang.moviesapplication.model.UserModel;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;

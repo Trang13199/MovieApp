@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/btnclose"
-            android:id="@+id/close"/>
+            android:id="@+id/closeRe"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

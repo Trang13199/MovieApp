@@ -1,18 +1,16 @@
 package com.mytrang.moviesapplication;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.mytrang.moviesapplication.Client.MovieClient;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.mytrang.moviesapplication.Client.UserClient;
 import com.mytrang.moviesapplication.Service.MovieService;
 import com.mytrang.moviesapplication.model.User;
@@ -21,7 +19,6 @@ import com.mytrang.moviesapplication.model.UserModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class RegisterMainActivity extends AppCompatActivity {
     private MovieService movieService;

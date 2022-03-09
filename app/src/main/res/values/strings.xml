@@ -16,4 +16,9 @@
 
     <string name="your_string_here"> <u>Đăng ký</u>.</string>
 
+
+
+    <string name="facebook_app_id">535181724487825</string> <string name="fb_login_protocol_scheme">fb535181724487825</string>
+
+
 </resources>

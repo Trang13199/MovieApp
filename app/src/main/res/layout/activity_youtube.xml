@@ -6,11 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".YoutubeActivity">
 
-<!--    <com.google.android.youtube.player.YouTubePlayerView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:id="@+id/youtube">-->
 
-<!--    </com.google.android.youtube.player.YouTubePlayerView>-->
+<!--    <TextView-->
+<!--        android:id="@+id/textname"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="176dp"-->
+<!--        android:layout_marginRight="176dp"-->
+<!--        android:layout_marginBottom="160dp"-->
+<!--        android:text="TextView"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/login_button"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+<!--&lt;!&ndash;    <TextView&ndash;&gt;-->
+<!--        android:id="@+id/textpass"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginLeft="15dp"-->
+<!--        android:layout_marginEnd="160dp"-->
+<!--        android:layout_marginRight="160dp"-->
+<!--        android:layout_marginBottom="70dp"-->
+<!--        android:text="TextView"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/login_button"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textname"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="1.0" />-->
+
+<!--    <com.facebook.login.widget.LoginButton-->
+<!--        android:id="@+id/login_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -66,13 +66,19 @@
             android:backgroundTint="#05B19B97"
             android:text="@string/forget_passwod" />
 
-        <Button
-            android:id="@+id/btn_fb"
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:backgroundTint="#2196F3"
-            android:text="@string/facebook" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </LinearLayout>
     <View
         android:layout_width="match_parent"

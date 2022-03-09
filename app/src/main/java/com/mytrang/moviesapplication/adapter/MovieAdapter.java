@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,11 +30,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
    private MovieItemListener mItemListener;
    private String id;
 
-   private static final int TYPE_ITEM = 1;
-   private static final int TYPE_LOADING = 2;
-   private boolean isLoading;
-
-
    SharedPreferences preferences;
 
     public MovieAdapter(Context context, List<Movies> arrayList, MovieItemListener movieItemListener) {
@@ -43,16 +37,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         this.arrayList = arrayList;
         mItemListener = mItemListener;
     }
-
-//    @Override
-//    public int getItemViewType(int position) {
-////        if(arrayList != null && position == arrayList.size() - 1 && isLoading){
-////            return TYPE_LOADING;
-////        }
-////        return TYPE_ITEM;
-//
-//        return arrayList.get(position) == null ? TYPE_ITEM : TYPE_LOADING;
-//    }
 
     @NonNull
     @Override
@@ -177,7 +161,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         private void watchVideo(View view) {
             preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
-            if (preferences.getString("email", "").isEmpty() && preferences.getString("password", "").isEmpty()) {
+            if (preferences.getString("email", "").isEmpty() || preferences.getString("password", "").isEmpty()
+                    || preferences.getString("token", "").isEmpty()) {
                 Intent login = new Intent(view.getContext(), LoginMainActivity.class);
                 view.getContext().startActivity(login);
             } else {
