@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +30,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     private Context context;
     private List<Movies> arrayList = new ArrayList<>();
     private MovieItemListener mItemListener;
-    private String id;
+    private int id;
 
     SharedPreferences preferences;
 
@@ -79,10 +81,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 .into(holder.imageView);
 
         holder.views.setText("Lượt xem: " + movies.getViews().toString());
-        id = movies.getId().toString();
+        id = movies.getId();
 
         preferences = context.getSharedPreferences("data", context.MODE_PRIVATE);
-        boolean ok = preferences.getBoolean(id, false);
+        boolean ok = preferences.getBoolean(String.valueOf(id), false);
         if (ok) {
 
             holder.imgLike.setImageResource(R.drawable.ic_like_orange);
@@ -158,16 +160,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 //                    setImage();
                     preferences = context.getSharedPreferences("data", context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
-                    boolean check = preferences.getBoolean(id, false);
+                    boolean check = preferences.getBoolean(String.valueOf(id), false);
 
-                    if (!check) {
+                    if (check) {
+//                        redColor();
                         whiteColor();
-                        editor.putBoolean(id, true);
+                        editor.putBoolean(String.valueOf(id), false);
+
                     } else {
+//                        whiteColor();
                         redColor();
-                        editor.putBoolean(id, false);
+                        editor.putBoolean(String.valueOf(id), true);
                     }
                     editor.commit();
+
+                    Log.e("id", String.valueOf(id));
             }
         }
 
@@ -185,7 +192,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         private void watchVideo(View view) {
             preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
-//            if (preferences.getString("email", "").isEmpty() && preferences.getString("password", "").isEmpty()) {
             if (preferences.getString("token", "").isEmpty() && preferences.getString("email", "").isEmpty() && preferences.getString("password", "").isEmpty()) {
                 Intent login = new Intent(view.getContext(), LoginMainActivity.class);
                 view.getContext().startActivity(login);
@@ -246,7 +252,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 //        like.setTextColor(Color.parseColor("#FFFFFFFF"));
     }
 
-    //
     public interface MovieItemListener {
         void onPostClick(long id);
     }

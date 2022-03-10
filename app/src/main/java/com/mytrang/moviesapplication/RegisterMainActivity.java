@@ -53,30 +53,37 @@ public class RegisterMainActivity extends AppCompatActivity {
                 if (name.isEmpty()) {
                     txtName.setError("Name is required");
                     txtName.requestFocus();
+                    return;
                 }
                 if (email.isEmpty()) {
                     txtEmail.setError("Email is required!");
                     txtEmail.requestFocus();
+                    return;
                 }
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     txtEmail.setError("Enter a valid email!");
                     txtEmail.requestFocus();
+                    return;
                 }
                 if (password.isEmpty()) {
                     txtPassword.setError("Password is required!");
                     txtPassword.requestFocus();
+                    return;
                 }
                 if (password.length() < 6) {
                     txtPassword.setError("Password should be atleast 6 character long");
                     txtPassword.requestFocus();
+                    return;
                 }
                 if (repass.isEmpty()) {
                     txtRepass.setError("Request Password is required!");
                     txtRepass.requestFocus();
+                    return;
                 }
                 if (!repass.equals(password)) {
                     txtRepass.setError("No same!");
                     txtRepass.requestFocus();
+                    return;
                 }
                 Call<UserModel> call = UserClient
                         .getInstance()
@@ -89,10 +96,13 @@ public class RegisterMainActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
 
                             User model = response.body().getData();
-                            Toast.makeText(RegisterMainActivity.this, "Email: " + model.getEmail().toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterMainActivity.this, "Dang ky thanh cong", Toast.LENGTH_LONG).show();
 
                             Intent intent = new Intent(RegisterMainActivity.this, LoginMainActivity.class);
                             startActivity(intent);
+                        }else{
+                            Toast.makeText(RegisterMainActivity.this, "Dang ky that bai", Toast.LENGTH_LONG).show();
+
                         }
                     }
 
