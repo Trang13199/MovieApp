@@ -49,6 +49,15 @@ public class LoginMainActivity extends AppCompatActivity {
         actionBar.hide();
         anhXa();
 
+
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginMainActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
         preferences = getSharedPreferences("data", MODE_PRIVATE);
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -91,8 +100,9 @@ public class LoginMainActivity extends AppCompatActivity {
                             editor.commit();
                             Toast.makeText(LoginMainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
 
-                            Intent intent = new Intent(LoginMainActivity.this, ListActivity.class);
-                            startActivity(intent);
+                            finish();
+//                            Intent intent = new Intent(LoginMainActivity.this, ListActivity.class);
+//                            startActivity(intent);
                         } else {
                             Toast.makeText(LoginMainActivity.this, "Login failing", Toast.LENGTH_LONG).show();
 

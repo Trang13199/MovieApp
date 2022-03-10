@@ -3,125 +3,132 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/bg"
     android:orientation="vertical"
     android:weightSum="3"
-    android:layout_height="match_parent"
     tools:context=".RegisterMainActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dang_ky"
-        android:gravity="center"
         android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/dang_ky"
         android:textColor="@color/white"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/white"/>
+        android:background="@color/white" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:weightSum="5"
+        android:orientation="vertical"
         android:padding="40dp"
-        android:orientation="vertical">
+        android:weightSum="5">
 
 
         <EditText
             android:id="@+id/name_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/gray"
-            android:textColorHint="@color/gray"
             android:layout_weight="1"
+            android:backgroundTint="@color/gray"
+            android:ems="10"
+            android:hint="@string/name"
             android:inputType="textPersonName"
-            android:hint="@string/name" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/gray" />
 
         <EditText
             android:id="@+id/email_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:layout_weight="1"
-            android:textColor="@color/white"
             android:backgroundTint="@color/gray"
-            android:textColorHint="@color/gray"
+            android:ems="10"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:hint="@string/email"/>
+            android:textColor="@color/white"
+            android:textColorHint="@color/gray" />
+
         <EditText
             android:id="@+id/pass_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/gray"
-            android:textColorHint="@color/gray"
             android:layout_weight="1"
+            android:backgroundTint="@color/gray"
+            android:ems="10"
+            android:hint="@string/passwork"
             android:inputType="numberPassword"
-            android:hint="@string/passwork"/>
+            android:textColor="@color/white"
+            android:textColorHint="@color/gray" />
+
         <EditText
             android:id="@+id/txt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:backgroundTint="@color/gray"
-            android:textColorHint="@color/gray"
             android:layout_weight="1"
-            android:textColor="@color/white"
+            android:backgroundTint="@color/gray"
+            android:ems="10"
+            android:hint="@string/validate"
             android:inputType="numberPassword"
-            android:hint="@string/validate"/>
+            android:textColor="@color/white"
+            android:textColorHint="@color/gray" />
 
         <Button
             android:id="@+id/register"
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:backgroundTint="@color/orange"
             android:text="@string/dang_ky" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/white"/>
+        android:background="@color/white" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="vertical"
-        android:weightSum="5"
-        android:layout_weight="1">
+        android:weightSum="5">
 
         <ImageView
+            android:id="@+id/closeRe"
             android:layout_width="30dp"
-            android:layout_gravity="center"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@drawable/btnclose"
-            android:id="@+id/closeRe"/>
+            android:src="@drawable/btnclose" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"/>
+            android:layout_weight="3" />
 
         <LinearLayout
-            android:gravity="bottom|center"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="bottom|center"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:padding="40dp"
                 android:layout_height="wrap_content"
+                android:padding="40dp"
                 android:text="@string/input"
-                android:textColor="@color/white"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textColor="@color/white" />
 
         </LinearLayout>
     </LinearLayout>

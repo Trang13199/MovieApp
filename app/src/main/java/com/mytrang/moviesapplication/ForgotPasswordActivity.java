@@ -18,7 +18,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-        etEmail = findViewById(R.id.et_email);
+        etEmail = findViewById(R.id.txt_email_forgot);
     }
 
     /// checking if the input in form is valid

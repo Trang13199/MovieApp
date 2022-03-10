@@ -19,9 +19,13 @@
     <string name="Quydinh"><u>Quy định bảo mật</u>.</string>
 
 
-<string name="input">Bằng việc chọn nút Đăng ký, bạn đã đồng ý với <u>Điều khoản sử sụng</u> và <u>Quy định bảo mật</u> của HFilm </string>
+    <string name="input">Bằng việc chọn nút Đăng ký, bạn đã đồng ý với <u>Điều khoản sử sụng</u> và <u>Quy định bảo mật</u> của HFilm </string>
 
-    <string name="facebook_app_id">535181724487825</string> <string name="fb_login_protocol_scheme">fb535181724487825</string>
+    <string name="facebook_app_id">535181724487825</string>
+    <string name="fb_login_protocol_scheme">fb535181724487825</string>
 
 
+    <string name="note_forgot">Hãy dùng email bạn đã dùng để tạo tài khoản</string>
+    <string name="send_pass">Gửi mật khẩu</string>
+    <string name="forgot_pass">Quên mật khẩu</string>
 </resources>
