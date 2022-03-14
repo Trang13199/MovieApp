@@ -29,7 +29,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     private Context context;
     private List<Movies> arrayList = new ArrayList<>();
     private MovieItemListener mItemListener;
-    private int id;
 
     SharedPreferences preferences;
 
@@ -66,7 +65,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             holder.name.setText(null);
         }
 
-
         String comment = movies.getDescription();
         if (comment.length() > 200) {
             holder.content.setText(comment.substring(0, 200) + "...");
@@ -76,35 +74,60 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         Picasso.get()
                 .load(movies.getImage())
-//                .placeholder(R.drawable.ic_bg)
                 .into(holder.imageView);
 
         holder.views.setText("Lượt xem: " + movies.getViews().toString());
-        id = movies.getId();
+        int id = movies.getId();
 
         preferences = context.getSharedPreferences("data", context.MODE_PRIVATE);
         boolean ok = preferences.getBoolean(String.valueOf(id), false);
         if (ok) {
 
-            holder.imgLike.setImageResource(R.drawable.ic_like_orange);
-            holder.txtLike.setText("Đã thích");
-            holder.txtLike.setTextColor(Color.parseColor("#F43D04"));
+            holder.redColor();
 
         } else {
 
-            holder.imgLike.setImageResource(R.drawable.ic_like);
-            holder.txtLike.setText("Thích");
-            holder.txtLike.setTextColor(Color.parseColor("#FFFFFFFF"));
-
+            holder.whiteColor();
 
         }
+
+
+        holder.imgLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                preferences = context.getSharedPreferences("data", context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+
+                if (preferences.getString("token", "").isEmpty() && preferences.getString("email", "").isEmpty()
+                        && preferences.getString("password", "").isEmpty()) {
+                    Intent login = new Intent(view.getContext(), LoginMainActivity.class);
+                    view.getContext().startActivity(login);
+                } else {
+
+                    boolean check = preferences.getBoolean(String.valueOf(id), false);
+
+                    if (!check) {
+                        holder.redColor();
+                        editor.putBoolean(String.valueOf(id), true);
+
+                    } else {
+                        holder.whiteColor();
+                        editor.putBoolean(String.valueOf(id), false);
+                    }
+                    editor.commit();
+
+                    Log.e("id", String.valueOf(id));
+
+                    Log.e("name", name);
+                }
+            }
+        });
     }
 
     public void updateAnswer(List<Movies> list) {
         arrayList = list;
         notifyDataSetChanged();
     }
-
 
     public void insertArr(List<Movies> list) {
         for (Movies m : list) {
@@ -141,9 +164,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             imgLike = itemView.findViewById(R.id.img_like);
             txtLike = itemView.findViewById(R.id.txt_like);
 
-            imgLike.setOnClickListener(this);
-
-
             this.mmovieItemListener = movieItemListener;
             watch = itemView.findViewById(R.id.btn_xemthem);
             watch.setOnClickListener(this);
@@ -155,25 +175,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 case R.id.btn_xemthem:
                     watchVideo(view);
                     break;
-                case R.id.img_like:
-//                    setImage();
-                    preferences = context.getSharedPreferences("data", context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    boolean check = preferences.getBoolean(String.valueOf(id), false);
-
-                    if (check) {
-//                        redColor();
-                        whiteColor();
-                        editor.putBoolean(String.valueOf(id), false);
-
-                    } else {
-//                        whiteColor();
-                        redColor();
-                        editor.putBoolean(String.valueOf(id), true);
-                    }
-                    editor.commit();
-
-                    Log.e("id", String.valueOf(id));
             }
         }
 
@@ -205,50 +206,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 view.getContext().startActivity(intent);
             }
         }
-
-//        private void setImage() {
-//            preferences = context.getSharedPreferences("data", context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = preferences.edit();
-//            boolean check = preferences.getBoolean(id, false);
-//
-//            if (check) {
-//
-//
-//                imgLike.setImageResource(R.drawable.ic_like);
-//                txtLike.setText("Thích");
-//                txtLike.setTextColor(Color.parseColor("#FFFFFFFF"));
-//                editor.putBoolean(id,false);
-//
-////                txtLike.setText("Đã thích");
-////                txtLike.setTextColor(Color.parseColor("#F43D04"));
-////                imgLike.setImageResource(R.drawable.ic_like_orange);
-////                editor.putBoolean(id, true);
-//            } else {
-////                imgLike.setImageResource(R.drawable.ic_like);
-////                txtLike.setText("Thích");
-////                txtLike.setTextColor(Color.parseColor("#FFFFFFFF"));
-////                editor.putBoolean(id,false);
-//
-//
-//                txtLike.setText("Đã thích");
-//                txtLike.setTextColor(Color.parseColor("#F43D04"));
-//                imgLike.setImageResource(R.drawable.ic_like_orange);
-//                editor.putBoolean(id, true);
-//            }
-//            editor.commit();
-//        }
-//    }
-
-//    private void checkRed() {
-//        img.setImageResource(R.drawable.ic_like_orange);
-//        tx.setText("Đã thích");
-//        like.setTextColor(Color.parseColor("#F43D04"));
-//    }
-//
-//    private void checkWhite() {
-//        imagelike.setImageResource(R.drawable.ic_like);
-//        like.setText("Thích");
-//        like.setTextColor(Color.parseColor("#FFFFFFFF"));
     }
 
     public interface MovieItemListener {

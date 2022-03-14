@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Name"
-            android:textColor="#F80837"
+            android:textColor="@color/do3"
             android:textSize="20sp" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Luot xem: "
-            android:textColor="#F80837" />
+            android:textColor="@color/do3" />
 
         <TextView
             android:id="@+id/txt_content"
@@ -73,7 +73,8 @@
                 android:id="@+id/btn_xemthem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/orange"
+                android:backgroundTint="@color/cam1"
+                android:textColor="@color/white"
                 android:text="Xem phim" />
         </LinearLayout>
 

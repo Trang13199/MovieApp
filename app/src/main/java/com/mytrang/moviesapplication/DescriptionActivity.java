@@ -4,7 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,8 +33,7 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
     TextView title, luotxem, category, actor, director, manufacture,
             thoiluong, description, toolbar_title, next, like, back;
     String nameYoutube, id;
-
-
+    
     String API_KEY = "AIzaSyDhvRkLLyQZYKG4SnnzbsBF06WGKHma_gw";
     int REQUEST_VIDEO = 123;
     YouTubePlayerView youTubePlayerView;
@@ -42,7 +47,6 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
         setContentView(R.layout.activity_description);
 
         anhXa();
-
 
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) {
@@ -72,12 +76,13 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
         for (int i = 0; i < youtube.length; i++) {
             nameYoutube = youtube[i];
         }
-        luotxem.setText("Lượt xem: " + movies.getViews());
-        category.setText("Genres: " + movies.getCategory());
-        actor.setText("Actor: " + movies.getActor());
-        director.setText("Director: " + movies.getDirector());
-        manufacture.setText("Manufacturer: " + movies.getManufacturer());
-        thoiluong.setText("Thời lượng phim: " + movies.getDuration() + " minute");
+
+        luotxem.setText(getSpan("Lượt xem: " + movies.getViews()));
+        category.setText(getSpan("Genres: " + movies.getCategory()));
+        actor.setText(getSpan("Actor: " + movies.getActor()));
+        director.setText(getSpan("Director: " + movies.getDirector()));
+        manufacture.setText(getSpan("Manufacturer: " + movies.getManufacturer()));
+        thoiluong.setText(getSpan("Thời lượng phim: " + movies.getDuration().toString() + " minute"));
 
 
         next.setText("Xem thêm");
@@ -117,6 +122,7 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
                     editor.putBoolean(id, false);
                 }
                 editor.commit();
+                Log.e("idDes", id);
             }
 
         });
@@ -133,6 +139,20 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
                 finish();
             }
         });
+    }
+
+    private SpannableString getSpan(String s) {
+        String[] input = s.split(":");
+        String view = input[0];
+
+        SpannableString spannableString = new SpannableString(s);
+        StyleSpan ss = new StyleSpan(Typeface.BOLD);
+        ForegroundColorSpan fg = new ForegroundColorSpan(Color.GRAY);
+        ForegroundColorSpan white = new ForegroundColorSpan(Color.WHITE);
+        spannableString.setSpan(white, 0, view.length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(ss, 0, view.length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(fg, view.length() + 1, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannableString;
     }
 
     private void getInfo() {

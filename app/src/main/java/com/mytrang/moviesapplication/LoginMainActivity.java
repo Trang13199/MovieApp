@@ -45,8 +45,8 @@ public class LoginMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.hide();
         anhXa();
 
 
@@ -86,7 +86,7 @@ public class LoginMainActivity extends AppCompatActivity {
                 call.enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                        if (response.isSuccessful()) {
+                        if (response.isSuccessful() && response.body().getData()!= null) {
                             response.body().getData();
 
                             User m = response.body().getData();
@@ -100,12 +100,13 @@ public class LoginMainActivity extends AppCompatActivity {
                             editor.commit();
                             Toast.makeText(LoginMainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
 
-                            finish();
-//                            Intent intent = new Intent(LoginMainActivity.this, ListActivity.class);
-//                            startActivity(intent);
+//                            finish();
+                            Intent intent = new Intent(LoginMainActivity.this, ListActivity.class);
+                            startActivity(intent);
                         } else {
                             Toast.makeText(LoginMainActivity.this, "Login failing", Toast.LENGTH_LONG).show();
-
+                            Intent intent = new Intent(LoginMainActivity.this, LoginMainActivity.class);
+                            startActivity(intent);
                         }
                     }
 
@@ -143,6 +144,9 @@ public class LoginMainActivity extends AppCompatActivity {
                 editor.putString("token", token);
                 editor.commit();
                 Toast.makeText(LoginMainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+
+                Log.e("id facebook", loginResult.getAccessToken().getUserId());
+                Log.e("id facebook", loginResult.getAccessToken().toString());
             }
 
             @Override

@@ -31,6 +31,13 @@
         android:padding="40dp"
         android:weightSum="5">
 
+        <TextView
+            android:id="@+id/name_mess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="vui long nhap ho ten"
+            android:textColor="@color/cam4"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/name_register"
@@ -44,6 +51,14 @@
             android:textColor="@color/white"
             android:textColorHint="@color/gray" />
 
+        <TextView
+            android:id="@+id/email_mess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="vui long nhap ho ten"
+            android:textColor="@color/cam4"
+            android:visibility="gone" />
+
         <EditText
             android:id="@+id/email_register"
             android:layout_width="match_parent"
@@ -56,6 +71,14 @@
             android:textColor="@color/white"
             android:textColorHint="@color/gray" />
 
+        <TextView
+            android:id="@+id/pass_mess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="vui long nhap ho ten"
+            android:textColor="@color/cam4"
+            android:visibility="gone" />
+
         <EditText
             android:id="@+id/pass_register"
             android:layout_width="match_parent"
@@ -67,6 +90,14 @@
             android:inputType="numberPassword"
             android:textColor="@color/white"
             android:textColorHint="@color/gray" />
+
+        <TextView
+            android:id="@+id/mess_repass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="vui long nhap ho ten"
+            android:textColor="@color/cam4"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/txt_password"
@@ -99,12 +130,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:weightSum="5">
+        android:weightSum="3">
 
         <ImageView
             android:id="@+id/closeRe"
             android:layout_width="30dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:src="@drawable/btnclose" />
@@ -112,7 +143,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3" />
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -123,9 +154,10 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/law"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="40dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/input"
                 android:textAlignment="center"
                 android:textColor="@color/white" />

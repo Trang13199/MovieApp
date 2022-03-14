@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MoviesApplication</string>
+    <string name="app_name">MoviesTrang</string>
 
 
     <string name="email">Email</string>
@@ -19,7 +19,7 @@
     <string name="Quydinh"><u>Quy định bảo mật</u>.</string>
 
 
-    <string name="input">Bằng việc chọn nút Đăng ký, bạn đã đồng ý với <u>Điều khoản sử sụng</u> và <u>Quy định bảo mật</u> của HFilm </string>
+    <string name="input">Bằng việc chọn nút Đăng ký, bạn đã đồng ý với \n <u>Điều khoản sử dụng</u> và <u>Quy định bảo mật</u> của HFilm</string>
 
     <string name="facebook_app_id">535181724487825</string>
     <string name="fb_login_protocol_scheme">fb535181724487825</string>

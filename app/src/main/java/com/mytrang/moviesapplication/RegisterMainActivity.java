@@ -1,15 +1,20 @@
 package com.mytrang.moviesapplication;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mytrang.moviesapplication.Client.UserClient;
@@ -23,9 +28,12 @@ import retrofit2.Response;
 
 public class RegisterMainActivity extends AppCompatActivity {
     private MovieService movieService;
-    EditText txtName, txtEmail, txtPassword, txtRepass;
-    Button register;
-    ImageView close;
+    private EditText txtName, txtEmail, txtPassword, txtRepass;
+    private Button register;
+    private ImageView close;
+    private TextView law;
+
+    private TextView messName, messEmail, messPass, messRepass;
 
     String name, email, password, repass;
 
@@ -34,8 +42,8 @@ public class RegisterMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_main);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.hide();
         anhXa();
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -51,40 +59,51 @@ public class RegisterMainActivity extends AppCompatActivity {
                 repass = txtRepass.getText().toString().trim();
 
                 if (name.isEmpty()) {
-                    txtName.setError("Name is required");
-                    txtName.requestFocus();
+                    messName.setText("Name is required");
+                    messName.setVisibility(View.VISIBLE);
                     return;
                 }
+                messName.setVisibility(View.GONE);
                 if (email.isEmpty()) {
-                    txtEmail.setError("Email is required!");
-                    txtEmail.requestFocus();
+                    messEmail.setText("Email is required!");
+                    messEmail.setVisibility(View.VISIBLE);
                     return;
                 }
+                messEmail.setVisibility(View.GONE);
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    txtEmail.setError("Enter a valid email!");
-                    txtEmail.requestFocus();
+                    messEmail.setText("Enter a valid email!");
+                    messEmail.setVisibility(View.VISIBLE);
                     return;
                 }
+                messEmail.setVisibility(View.GONE);
                 if (password.isEmpty()) {
-                    txtPassword.setError("Password is required!");
-                    txtPassword.requestFocus();
+                    messPass.setText("Password is required!");
+                    messPass.setVisibility(View.VISIBLE);
                     return;
                 }
+                messPass.setVisibility(View.GONE);
                 if (password.length() < 6) {
-                    txtPassword.setError("Password should be atleast 6 character long");
-                    txtPassword.requestFocus();
+                    messPass.setText("Password should be atleast 6 character long");
+                    messPass.setVisibility(View.VISIBLE);
                     return;
                 }
+                messPass.setVisibility(View.GONE);
                 if (repass.isEmpty()) {
-                    txtRepass.setError("Request Password is required!");
-                    txtRepass.requestFocus();
+                    messRepass.setText("Request Password is required!");
+                    messRepass.setVisibility(View.VISIBLE);
                     return;
                 }
+                messRepass.setVisibility(View.GONE);
                 if (!repass.equals(password)) {
-                    txtRepass.setError("No same!");
-                    txtRepass.requestFocus();
+//                    txtRepass.setError("No same!");
+//                    txtRepass.requestFocus();
+                    messRepass.setText("No same!");
+                    messRepass.setVisibility(View.VISIBLE);
                     return;
                 }
+                messRepass.setVisibility(View.GONE);
+
+
                 Call<UserModel> call = UserClient
                         .getInstance()
                         .getApi()
@@ -100,7 +119,7 @@ public class RegisterMainActivity extends AppCompatActivity {
 
                             Intent intent = new Intent(RegisterMainActivity.this, LoginMainActivity.class);
                             startActivity(intent);
-                        }else{
+                        } else {
                             Toast.makeText(RegisterMainActivity.this, "Dang ky that bai", Toast.LENGTH_LONG).show();
 
                         }
@@ -125,6 +144,22 @@ public class RegisterMainActivity extends AppCompatActivity {
             }
         });
 
+        law.setText(updatetext(law.getText().toString()));
+
+    }
+
+    private SpannableString updatetext(String toString) {
+
+        SpannableString sp = new SpannableString(toString);
+        ForegroundColorSpan fc = new ForegroundColorSpan(Color.RED);
+        ForegroundColorSpan fc1 = new ForegroundColorSpan(Color.RED);
+        UnderlineSpan un = new UnderlineSpan();
+        UnderlineSpan un1 = new UnderlineSpan();
+        sp.setSpan(fc, 47, 66, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        sp.setSpan(un, 47, 66, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        sp.setSpan(fc1, 69, 86, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        sp.setSpan(un1, 69, 86, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return sp;
     }
 
     private void anhXa() {
@@ -135,5 +170,13 @@ public class RegisterMainActivity extends AppCompatActivity {
 
         register = findViewById(R.id.register);
         close = findViewById(R.id.closeRe);
+
+        law = findViewById(R.id.law);
+
+
+        messName = findViewById(R.id.name_mess);
+        messEmail = findViewById(R.id.email_mess);
+        messPass = findViewById(R.id.pass_mess);
+        messRepass = findViewById(R.id.mess_repass);
     }
 }

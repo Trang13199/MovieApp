@@ -1,16 +1,14 @@
 package com.mytrang.moviesapplication;
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,7 +22,6 @@ import com.mytrang.moviesapplication.model.Data;
 import com.mytrang.moviesapplication.model.Movies;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,14 +31,13 @@ public class ListActivity extends AppCompatActivity {
     private MovieService movieService;
     private RecyclerView recyclerView;
     private MovieAdapter adapter;
-    private List<Movies> arrayList;
-    private ProgressDialog progressDialog;
-    private ActionBar actionBar;
+    private TextView toolBar;
+//    private ProgressDialog progressDialog;
 
     private boolean isLoading;
     private boolean isLastPage;
     private int currentPage = 1;
-    private int totalPage = 10;
+    private int totalPage;
     private ProgressBar progressBar;
 
     @Override
@@ -52,27 +48,33 @@ public class ListActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.list_view);
         progressBar = findViewById(R.id.progress_bar);
 
-        actionBar = getSupportActionBar();
-        actionBar.setTitle("HFILM");
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#F43D04")));
+        toolBar = findViewById(R.id.title_toolBar);
+        toolBar.setText("HFILM");
+
+//        actionBar = getSupportActionBar();
+//        actionBar.setTitle("HFILM");
+//        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#F43D04")));
 
 
-        progressDialog = new ProgressDialog(ListActivity.this);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
-        progressDialog.setCancelable(false);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                progressDialog.dismiss();
-            }
-        }).start();
+//        progressDialog = new ProgressDialog(ListActivity.this);
+////        progressDialog.setCancelable(false);
+//        progressDialog.setMax(100);
+//        progressDialog.setMessage("Loading...");
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//
+//        progressDialog.show();
+//        progressDialog.setCancelable(false);
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(5000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                progressDialog.dismiss();
+//            }
+//        }).start();
 
         movieService = APIUtil.getMovieService();
 
@@ -89,6 +91,8 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
+
+        loadFirstAnswer();
 
         recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
             @Override
@@ -112,8 +116,6 @@ public class ListActivity extends AppCompatActivity {
         });
 
 
-        loadFirstAnswer();
-
     }
 
     private void loadNextPage() {
@@ -126,6 +128,7 @@ public class ListActivity extends AppCompatActivity {
                     public void onResponse(Call<Data> call, Response<Data> response) {
                         if (response.isSuccessful()) {
                             adapter.insertArr(response.body().getData());
+                            totalPage = response.body().getPaging().getTotalPages();
                         }
                     }
 
@@ -146,18 +149,26 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void loadFirstAnswer() {
+        // display a progress dialog
+        final ProgressDialog progressDialog = new ProgressDialog(ListActivity.this);
+        progressDialog.setCancelable(false); // set cancelable to false
+        progressDialog.setMessage("Please Wait"); // set message
+        progressDialog.show(); // show progress dialog
         movieService.getAnswer(String.valueOf(currentPage), "10").enqueue(new Callback<Data>() {
 
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
                 if (response.isSuccessful()) {
                     adapter.updateAnswer(response.body().getData());
+                    totalPage = response.body().getPaging().getTotalPages();
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<Data> call, Throwable t) {
                 Log.d("MainActivity", "Error loading from API");
+                progressDialog.dismiss();
             }
         });
     }

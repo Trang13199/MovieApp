@@ -35,13 +35,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp">
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,8 +49,8 @@
 
                 <ImageView
                     android:id="@+id/img_des"
-                    android:layout_width="150dp"
-                    android:layout_height="200dp"
+                    android:layout_width="170dp"
+                    android:layout_height="220dp"
                     android:src="@drawable/bg" />
 
                 <LinearLayout
@@ -71,6 +70,8 @@
                         android:id="@+id/txt_vote"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="Lượt xem"
                         android:textColor="@color/white" />
 
@@ -113,6 +114,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -150,7 +153,7 @@
                 android:layout_gravity="right"
                 android:layout_marginLeft="40dp"
                 android:layout_marginBottom="30dp"
-                android:textColor="@color/orange" />
+                android:textColor="@color/cam1" />
 
             <View
                 android:layout_width="match_parent"
@@ -162,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="XEM TRAILER"
-                android:textColor="@color/orange"
+                android:textColor="@color/cam1"
                 android:textSize="20sp" />
 
             <com.google.android.youtube.player.YouTubePlayerView

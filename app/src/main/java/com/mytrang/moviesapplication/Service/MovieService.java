@@ -36,4 +36,12 @@ public interface MovieService {
     @POST("user/login")
     Call<UserModel> getLoginUser(@Field("email") String mail,
                                  @Field("password") String password);
+
+
+
+    //////////
+    @FormUrlEncoded
+    @Headers("app_token: dCuW7UQMbdvpcBDfzolAOSGFIcAec11a")
+    @POST("user/forgot-password")
+    Call<UserModel> forgotPassword(@Field("email") String email);
 }
