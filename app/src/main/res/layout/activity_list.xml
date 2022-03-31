@@ -24,6 +24,14 @@
             android:text="Toolbar Title"
             android:textColor="@android:color/white" />
 
+        <TextView
+            android:id="@+id/account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:drawableRight="@drawable/ic_baseline_account_circle_24"
+            android:drawableTint="@color/white" />
+
     </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout

@@ -7,6 +7,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -113,13 +114,18 @@ public class RegisterMainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         if (response.isSuccessful()) {
+                            if (response.body().getError() && response.body().getMessage().equals("Email has been existed")){
+                                Toast.makeText(RegisterMainActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            }else {
+                                User model = response.body().getData();
+                                Toast.makeText(RegisterMainActivity.this, "Dang ky thanh cong", Toast.LENGTH_LONG).show();
+//                            Intent intent = new Intent(RegisterMainActivity.this, LoginMainActivity.class);
+//                            startActivity(intent);
+                                finish();
+                            }
 
-                            User model = response.body().getData();
-                            Toast.makeText(RegisterMainActivity.this, "Dang ky thanh cong", Toast.LENGTH_LONG).show();
-
-                            Intent intent = new Intent(RegisterMainActivity.this, LoginMainActivity.class);
-                            startActivity(intent);
                         } else {
+
                             Toast.makeText(RegisterMainActivity.this, "Dang ky that bai", Toast.LENGTH_LONG).show();
 
                         }

@@ -1,6 +1,8 @@
 package com.mytrang.moviesapplication;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mytrang.moviesapplication.Service.MovieService;
 import com.mytrang.moviesapplication.Util.APIUtil;
+import com.mytrang.moviesapplication.adapter.ItemClick;
 import com.mytrang.moviesapplication.adapter.MovieAdapter;
 import com.mytrang.moviesapplication.adapter.PaginationScrollListener;
 import com.mytrang.moviesapplication.model.Data;
@@ -27,11 +30,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements ItemClick {
     private MovieService movieService;
     private RecyclerView recyclerView;
     private MovieAdapter adapter;
-    private TextView toolBar;
+    private TextView toolBar, account;
 //    private ProgressDialog progressDialog;
 
     private boolean isLoading;
@@ -39,6 +42,8 @@ public class ListActivity extends AppCompatActivity {
     private int currentPage = 1;
     private int totalPage;
     private ProgressBar progressBar;
+
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,29 @@ public class ListActivity extends AppCompatActivity {
 //            }
 //        }).start();
 
+
+        account = findViewById(R.id.account);
+        account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                preferences = getSharedPreferences("data", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                if (preferences.getString("token", "").isEmpty()) {
+//                    Toast.makeText(ListActivity.this, "Ban chua dang nhap", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(ListActivity.this, LoginMainActivity.class);
+//                    startActivity(intent);
+                    account.setVisibility(View.GONE);
+                } else {
+
+                    editor.clear();
+                    editor.commit();
+                    Toast.makeText(ListActivity.this, "Logout success full", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ListActivity.this, ListActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
         movieService = APIUtil.getMovieService();
 
         adapter = new MovieAdapter(this, new ArrayList<Movies>(0), new MovieAdapter.MovieItemListener() {
@@ -84,6 +112,7 @@ public class ListActivity extends AppCompatActivity {
                 Toast.makeText(ListActivity.this, "Post id is" + id, Toast.LENGTH_LONG).show();
             }
         });
+        adapter.setItemClick(this::onClick);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -171,5 +200,12 @@ public class ListActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onClick(String s) {
+        Intent login = new Intent(this, LoginMainActivity.class);
+        startActivity(login);
+        Toast.makeText(this, "" + s, Toast.LENGTH_SHORT).show();
     }
 }

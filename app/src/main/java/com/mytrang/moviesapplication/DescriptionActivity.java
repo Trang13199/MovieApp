@@ -33,7 +33,7 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
     TextView title, luotxem, category, actor, director, manufacture,
             thoiluong, description, toolbar_title, next, like, back;
     String nameYoutube, id;
-    
+
     String API_KEY = "AIzaSyDhvRkLLyQZYKG4SnnzbsBF06WGKHma_gw";
     int REQUEST_VIDEO = 123;
     YouTubePlayerView youTubePlayerView;
@@ -62,10 +62,8 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
 
         if (name.contains("/")) {
             String[] arr = name.split("/");
-            for (int i = 0; i < arr.length; i++) {
-                toolbar_title.setText(arr[0]);
-                title.setText(arr[i]);
-            }
+            toolbar_title.setText(arr[0]);
+            title.setText(arr[1]);
         } else {
             toolbar_title.setText(movies.getTitle());
             title.setText(movies.getTitle());
@@ -85,14 +83,21 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
         thoiluong.setText(getSpan("Thời lượng phim: " + movies.getDuration().toString() + " minute"));
 
 
-        next.setText("Xem thêm");
         String des = movies.getDescription();
-        if (des.length() > 180) {
-            description.setText(des.substring(0, 180) + "...");
-        } else {
-            next.setText(null);
-            description.setText(des);
-        }
+        description.post(new Runnable() {
+            @Override
+            public void run() {
+                description.setText(des);
+                int count = description.getLineCount();
+                Log.e("line", String.valueOf(count));
+                if (count > 3) {
+                    description.setMaxLines(3);
+                } else {
+                    next.setText(null);
+                }
+            }
+        });
+
 
         toolbar_title = findViewById(R.id.toolbar_title);
 
@@ -102,7 +107,9 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
             @Override
             public void onClick(View view) {
                 description.setText(movies.getDescription());
+                description.setMaxLines(movies.getDescription().toString().length());
                 next.setText(null);
+                Log.e("des", String.valueOf(description.getLineCount()));
             }
         });
 
@@ -134,8 +141,6 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//            Intent intent = new Intent(DescriptionActivity.this, ListActivity.class);
-//            startActivity(intent);
                 finish();
             }
         });
@@ -159,16 +164,9 @@ public class DescriptionActivity extends YouTubeBaseActivity implements YouTubeP
         preferences = getSharedPreferences("data", MODE_PRIVATE);
         boolean ok = preferences.getBoolean(id, false);
         if (ok) {
-
-            imagelike.setImageResource(R.drawable.ic_like_orange);
-            like.setText("Đã thích");
-            like.setTextColor(Color.parseColor("#F43D04"));
+            checkRed();
         } else {
-
-            imagelike.setImageResource(R.drawable.ic_like);
-            like.setText("Thích");
-            like.setTextColor(Color.parseColor("#FFFFFFFF"));
-
+            checkWhite();
         }
     }
 

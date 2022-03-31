@@ -29,6 +29,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     private Context context;
     private List<Movies> arrayList = new ArrayList<>();
     private MovieItemListener mItemListener;
+    private ItemClick itemClick;
 
     SharedPreferences preferences;
 
@@ -36,6 +37,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         this.context = context;
         this.arrayList = arrayList;
         mItemListener = mItemListener;
+    }
+
+    public void setItemClick(ItemClick itemClick) {
+        this.itemClick = itemClick;
     }
 
     @NonNull
@@ -56,21 +61,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         String name = movies.getTitle();
         if (name.contains("/")) {
             String[] header = name.split("/");
-            for (int i = 0; i < header.length; i++) {
-                holder.title.setText(header[0]);
-                holder.name.setText(header[i]);
-            }
+            holder.title.setText(header[0]);
+            holder.name.setText(header[1]);
         } else {
             holder.title.setText(movies.getTitle());
             holder.name.setText(null);
         }
 
         String comment = movies.getDescription();
-        if (comment.length() > 200) {
-            holder.content.setText(comment.substring(0, 200) + "...");
-        } else {
+//        if (comment.length() > 200) {
+//            holder.content.setText(comment.substring(0, 200) + "...");
+////            holder.content.getli
+//        } else {
             holder.content.setText(comment);
-        }
+//        }
 
         Picasso.get()
                 .load(movies.getImage())
@@ -100,8 +104,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
                 if (preferences.getString("token", "").isEmpty() && preferences.getString("email", "").isEmpty()
                         && preferences.getString("password", "").isEmpty()) {
-                    Intent login = new Intent(view.getContext(), LoginMainActivity.class);
-                    view.getContext().startActivity(login);
+                    itemClick.onClick("token");
+
+//                    Intent login = new Intent(view.getContext(), LoginMainActivity.class);
+//                    view.getContext().startActivity(login);
                 } else {
 
                     boolean check = preferences.getBoolean(String.valueOf(id), false);
